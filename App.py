@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, jsonify, render_template, request, redirect, url_for, session
 import os
 
 app = Flask(__name__)
@@ -11,11 +11,19 @@ users = {
     'usuario3': 'contrasena3'
 }
 
+bikes = [
+    {"id": 1, "model": "Mountain Bike", "available": True},
+    {"id": 2, "model": "City Bike", "available": True},
+    {"id": 3, "model": "BMX Bike", "available": False},
+]
+
+rentals = []
+
 @app.route('/', methods=['GET', 'POST'])
 def index():
     if 'username' in session:
         username = session['username']
-        return render_template('index.html', username=username)
+        return render_template('index.html', bikes=bikes, username=username)
     else:
         return redirect(url_for('login'))
 
@@ -50,6 +58,30 @@ def register():
             return redirect(url_for('index'))
     else:
         return render_template('register.html')
+
+@app.route('/bike/<int:bike_id>')
+def bike(bike_id):
+    bike = next((bike for bike in bikes if bike["id"] == bike_id), None)
+    if bike:
+        return render_template('bike.html', bike=bike)
+    else:
+        return render_template('404.html'), 404
+
+@app.route('/bike/<int:bike_id>/rent', methods=['POST'])
+def rent_bike(bike_id):
+    bike = next((bike for bike in bikes if bike["id"] == bike_id), None)
+    if bike and bike["available"]:
+        bike["available"] = False
+        rentals.append(bike)
+        return redirect(url_for('index'))
+    elif bike:
+        return render_template('not_available.html', bike=bike)
+    else:
+        return render_template('404.html'), 404
+
+@app.route('/rentals')
+def rentals():
+    return render_template('rentals.html', rentals=rentals)
 
 if __name__ == '__main__':
     app.run(debug=True)

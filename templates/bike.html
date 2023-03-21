@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ bike.model }}</title>
+</head>
+<body>
+    <h1>{{ bike.model }}</h1>
+    <ul>
+        <li>ID: {{ bike.id }}</li>
+        <li>Available: {% if bike.available %}Yes{% else %}No{% endif %}</li>
+    </ul>
+    {% if bike.available %}
+    <form action="/bike/{{ bike.id }}/rent" method="POST">
+        <button type="submit">Rent</button>
+    </form>
+    {% else %}
+    <p>This bike is not available for rent at the moment.</p>
+    {% endif %}
+</body>
+</html>

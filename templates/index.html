@@ -12,5 +12,21 @@
 		<p><a href="{{ url_for('login') }}">Iniciar sesión</a></p>
 		<p><a href="{{ url_for('register') }}">Registrarse</a></p>
 	{% endif %}
+    <br>
+    <h1>Bicicletas Disponibles:</h1>
+    <ul>
+        {% for bike in bikes %}
+        <li>
+            <a href="/bike/{{ bike.id }}">{{ bike.model }}</a>
+            {% if bike.available %}
+            <form action="/bike/{{ bike.id }}/rent" method="POST">
+                <button type="submit">Rent</button>
+            </form>
+            {% else %}
+            <span>(Not available)</span>
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
 </body>
 </html>
