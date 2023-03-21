@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Renta de bicicletas</title>
+</head>
+<body>
+	{% if username %}
+		<h1>Bienvenido, {{ username }}!</h1>
+		<a href="{{ url_for('logout') }}">Cerrar sesión</a>
+	{% else %}
+		<p>Por favor, inicie sesión o regístrese.</p>
+		<p><a href="{{ url_for('login') }}">Iniciar sesión</a></p>
+		<p><a href="{{ url_for('register') }}">Registrarse</a></p>
+	{% endif %}
+</body>
+</html>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Renta de bicicletas - Registro</title>
+</head>
+<body>
+	<h1>Registro</h1>
+	{% if error %}
+		<p style="color: red;">{{ error }}</p>
+	{% endif %}
+	<form method="POST">
+		<label for="username">Nombre de usuario:</label><br>
+		<input type="text" id="username" name="username"><br>
+		<label for="password">Contraseña:</label><br>
+		<input type="password" id="password" name="password"><br><br>
+		<input type="submit" value="Registrarse">
+	</form>
+	<p>¿Ya tienes una cuenta? <a href="{{ url_for('login') }}">Inicia sesión aquí</a>.</p>
+</body>
+</html>
