@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil</title>
+</head>
+<body>
+    <h1>Perfil</h1>
+    <p>Usuario: {{username}}</p>
+    {% if username in rentals %}
+    <p>Actualmente rentando:</p>
+    <ul>
+        {% for bike in rentals[username] %}
+        <li>
+            <a href="/bike/{{ bike.id }}">{{ bike.model }}</a>
+            <form action="/bike/{{ bike.id }}/return" method="POST">
+                <button type="submit">Return</button>
+            </form>
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <p></p>
+    <p>Historial de Rentas</p>
+    {% if username in rentals_history %}
+    
+    {% endif %}
+
+</body>
+</html>

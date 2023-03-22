@@ -6,6 +6,7 @@ app.secret_key = os.urandom(24)  # Clave secreta para las sesiones
 
 # Base de datos de usuarios registrados (para fines de demostración solamente)
 users = {
+    'admin': 'admin',
     'usuario1': 'contrasena1',
     'usuario2': 'contrasena2',
     'usuario3': 'contrasena3'
@@ -19,13 +20,15 @@ bikes = [
 
 rentals = []
 
+rentals_history = []
+
 @app.route('/', methods=['GET', 'POST'])
 def index():
     if 'username' in session:
         username = session['username']
         return render_template('index.html', bikes=bikes, username=username)
     else:
-        return redirect(url_for('login'))
+        return render_template('index.html', bikes=bikes)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -58,6 +61,13 @@ def register():
             return redirect(url_for('index'))
     else:
         return render_template('register.html')
+    
+@app.route('/users/<username>')
+def user(username):
+    if username in users:
+        return render_template('user.html', username=username, rentals_history=rentals_history)
+    else:
+        return render_template('404.html'), 404
 
 @app.route('/bike/<int:bike_id>')
 def bike(bike_id):
@@ -67,7 +77,7 @@ def bike(bike_id):
     else:
         return render_template('404.html'), 404
 
-@app.route('/bike/<int:bike_id>/rent', methods=['POST'])
+@app.route('/bike/<int:bike_id>/<action>', methods=['POST'])
 def rent_bike(bike_id):
     bike = next((bike for bike in bikes if bike["id"] == bike_id), None)
     if bike and bike["available"]:
@@ -80,7 +90,7 @@ def rent_bike(bike_id):
         return render_template('404.html'), 404
 
 @app.route('/rentals')
-def rentals():
+def rental():
     return render_template('rentals.html', rentals=rentals)
 
 if __name__ == '__main__':
