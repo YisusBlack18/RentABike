@@ -12,9 +12,11 @@
             <li>Available: {% if bike.available %}Yes{% else %}No{% endif %}</li>
         </ul>
         {% if bike.available %}
-        <form action="/bike/{{ bike.id }}/rent" method="POST">
-            <button type="submit">Rent</button>
-        </form>
+            {% if session['username'] not in rentals %}
+                <form action="/bike/{{ bike.id }}/rent" method="POST">
+                    <button type="submit">Rent</button>
+                </form>
+            {% endif %}
         {% else %}
         <p>This bike is not available for rent at the moment.</p>
         {% endif %}

@@ -111,7 +111,7 @@ def user(username):
 @app.route('/bike/<bike_id>')
 def bike(bike_id):
     if bike_id in bikes:
-        return render_template('bike.html', bike=bikes[bike_id])
+        return render_template('bike.html', bike=bikes[bike_id], session=session, rentals=rentals)
     else:
         return render_template('404.html'), 404
 
