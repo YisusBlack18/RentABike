@@ -5,21 +5,24 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Usuarios</title>
+    <link rel="stylesheet" href="/static/diseño.css">
 </head>
 <body>
-    {% if users %}
-    <h1>Lista de Usuarios</h1>
-    <ul>
-        {% for user in users %}
-        <li>
-            <a href="/users/{{ user }}">{{ user }}</a>
-            <form action="" method="post">
-                <button type="submit">Edit</button>
-                <button type="submit">Delete</button>
-            </form>
-        </li>
-        {% endfor %}
-    </ul>
-    {% endif %}
+    <div class="container">
+        {% if users %}
+        <h1>Lista de Usuarios</h1>
+        <ul>
+            {% for user in users %}
+            <li>
+                <a href="/users/{{ user }}">{{ user }}</a>
+                <form action="/users/{{ user }}" method="POST">
+                    <!-- <button type="submit" name="action" id="action" value="edit">Edit</button> -->
+                    <button type="submit" name="action" id="action" value="delete">Delete</button>
+                </form>
+            </li>
+            {% endfor %}
+        </ul>
+        {% endif %}   
+    </div>
 </body>
 </html>

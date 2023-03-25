@@ -2,18 +2,22 @@
 <html>
 <head>
     <title>Rentals</title>
+    <link rel="stylesheet" href="/static/diseño.css">
 </head>
 <body>
-    <h1>Bikes currently rented:</h1>
-    {% if rentals %}
-    <ul>
-        {% for bike in rentals %}
-        <li>{{ rentals[bike] }}</li>
-        {% endfor %}
-    </ul>
-    {% else %}
-    <p>No bikes are currently rented.</p>
-    {% endif %}
-    <a href="/">Volver a inicio</a>
+    <div class="container">
+        <h1>Bikes currently rented:</h1>
+        {% if rentals %}
+        <ul>
+            {% for bike in rentals %}
+            <li>ID:{{ rentals[bike].id }}, Model:{{ rentals[bike].model }}, Inicio:{{ rentals[bike].startdate }}</li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p>No bikes are currently rented.</p>
+        {% endif %}
+        <a href="/">Volver a inicio</a> 
+    </div>
+    
 </body>
 </html>

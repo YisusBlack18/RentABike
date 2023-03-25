@@ -62,10 +62,12 @@ def register():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
+        name = request.form['name']
+        telefono = request.form['telefono']
         if username in users:
             return render_template('register.html', error='Ese nombre de usuario ya está en uso')
         else:
-            users[username] = password
+            users[username] = {'username': username, 'password': password, 'name': name, 'telefono': telefono}
             session['username'] = username
             return redirect(url_for('index'))
     else:
@@ -80,8 +82,14 @@ def user_list():
         return render_template('404.html'), 404
 
 # Esta ruta es para mostrar la información de un usuario en específico
-@app.route('/users/<username>')
+@app.route('/users/<username>', methods=['GET','POST'])
 def user(username):
+    if request.method == 'POST':
+        if request.form['action'] == 'delete':
+            users.pop(username, None)
+            return redirect(url_for('user_list'))
+        else:
+            return render_template('404.html'), 404
     if username in users:
         return render_template('user.html', user=users[username], rentals=rentals, rentals_history=rentals_history,session=session)
     else:

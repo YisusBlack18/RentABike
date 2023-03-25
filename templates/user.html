@@ -5,38 +5,40 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perfil</title>
+    <link rel="stylesheet" href="/static/diseño.css">
 </head>
 <body>
-    <h1>Perfil</h1>
-    <p>Usuario: {{user.username}}</p>
-    {% if session['username'] == user.username %}
-    <p>Nombre: {{user.name}}</p>
-    <p>Telefono: {{user.telefono}}</p>
-    {% endif %}
-    {% if user['username'] in rentals %}
-    <p>Actualmente rentando:</p>
-    <ul>
-        {% if rentals[user['username']] %}
-        <li>
-            <a href="/bike/{{ rentals[user['username']].id }}">{{ rentals[user['username']].id }},{{ rentals[user['username']].model }}</a>
-            <form action="/bike/{{ rentals[user['username']].id }}/return" method="POST">
-                <button type="submit">Return</button>
-            </form>
-        </li>
+    <div class="container">
+        <h1>Perfil</h1>
+        <p>Usuario: {{user.username}}</p>
+        {% if session['username'] == user.username %}
+        <p>Nombre: {{user.name}}</p>
+        <p>Telefono: {{user.telefono}}</p>
         {% endif %}
-    </ul>
-    {% endif %}
-    <p></p>
-    <p>Historial de Rentas</p>
-    {% if user['username'] in rentals_history %}
-    <ul>
-        {% for bike in rentals_history[user['username']] %}
-        <li>
-            <a href="/bike/{{ bike.id }}">{{ bike.id }} {{ bike.model }} {{ bike.startdate }} {{ bike.enddate }} {{bike.price}}</a>
-        </li>
-        {% endfor %}
-    </ul>
-    {% endif %}
-
+        {% if user['username'] in rentals %}
+        <p>Actualmente rentando:</p>
+        <ul>
+            {% if rentals[user['username']] %}
+            <li>
+                <a href="/bike/{{ rentals[user['username']].id }}">{{ rentals[user['username']].id }},{{ rentals[user['username']].model }}</a>
+                <form action="/bike/{{ rentals[user['username']].id }}/return" method="POST">
+                    <button type="submit">Return</button>
+                </form>
+            </li>
+            {% endif %}
+        </ul>
+        {% endif %}
+        <p></p>
+        <p>Historial de Rentas</p>
+        {% if user['username'] in rentals_history %}
+        <ul>
+            {% for bike in rentals_history[user['username']] %}
+            <li>
+                <a href="/bike/{{ bike.id }}">{{ bike.id }} {{ bike.model }} {{ bike.startdate }} {{ bike.enddate }} {{bike.price}}</a>
+            </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
 </body>
 </html>
