@@ -1,24 +1,27 @@
 from flask import Flask, jsonify, render_template, request, redirect, url_for, session
 import os
+import time
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)  # Clave secreta para las sesiones
 
 # Base de datos de usuarios registrados (para fines de demostración solamente)
 users = {
-    'admin': 'admin',
-    'usuario1': 'contrasena1',
-    'usuario2': 'contrasena2',
-    'usuario3': 'contrasena3'
+    'admin': {'password': 'admin', 'name': 'admin', 'telefono': '123456789'},
+    'usuario1': {'password': 'contrasena1', 'name': 'usuario1', 'telefono': '123456789'},
+    'usuario2': {'password': 'contrasena2', 'name': 'usuario2', 'telefono': '123456789'},
+    'usuario3': {'password': 'contrasena3', 'name': 'usuario3', 'telefono': '123456789'}
 }
 
-bikes = [
-    {"id": 1, "model": "Mountain Bike", "available": True},
-    {"id": 2, "model": "City Bike", "available": True},
-    {"id": 3, "model": "BMX Bike", "available": False},
-]
+bikes = {
+    '1': {"id": 1, "model": "Mountain Bike", "available": True},
+    '2': {"id": 2, "model": "City Bike", "available": True},
+    '3': {"id": 3, "model": "BMX Bike", "available": False}
+}
 
-rentals = []
+rentals = {
+    'usuario1': {"id": 1, "model":"Mountain Bike", "date": "2020-10-10", "time": "165"}
+}
 
 rentals_history = []
 
@@ -61,6 +64,13 @@ def register():
             return redirect(url_for('index'))
     else:
         return render_template('register.html')
+    
+@app.route('/users')
+def user_list():
+    if len(users.keys()) > 0:
+        return render_template('user_list.html', users=users)
+    else:
+        return render_template('404.html'), 404
     
 @app.route('/users/<username>')
 def user(username):

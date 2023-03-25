@@ -15,21 +15,19 @@
 	{% endif %}
     <br>
     <h1>Bicicletas Disponibles:</h1>
+    <p><a href="">Rentar una bicicleta</a></p>
     <ul>
         {% for bike in bikes %}
-        <li>
-            <a href="/bike/{{ bike.id }}">{{ bike.model }}</a>
             {% if bike.available %}
-            <form action="/bike/{{ bike.id }}/rent" method="POST">
-                <button type="submit">Rent</button>
-            </form>
-            {% else %}
-            <span>(Not available)</span>
+            <li>
+                <a href="/bike/{{ bike.id }}">{{ bike.model }}</a>
+            </li>
             {% endif %}
-        </li>
         {% endfor %}
     </ul>
     <br>
-    <a href="/rentals">Ver bicicletas rentadas</a>
+    {% if username == "admin" %}
+        <a href="/rentals">Ver bicicletas rentadas</a>
+    {% endif %}
 </body>
 </html>
