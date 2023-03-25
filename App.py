@@ -16,7 +16,19 @@ users = {
 bikes = {
     '1': {"id": 1, "model": "Mountain Bike", "available": True},
     '2': {"id": 2, "model": "City Bike", "available": True},
-    '3': {"id": 3, "model": "BMX Bike", "available": False}
+    '3': {"id": 3, "model": "BMX Bike", "available": False},
+    '4': {"id": 4, "model": "Road Bike", "available": True},
+    '5': {"id": 5, "model": "Tandem Bike", "available": True},
+    '6': {"id": 6, "model": "Electric Bike", "available": True},
+    '7': {"id": 7, "model": "Folding Bike", "available": True},
+    '8': {"id": 8, "model": "Cruiser Bike", "available": True},
+    '9': {"id": 9, "model": "Kids Bike", "available": True},
+    '10': {"id": 10, "model": "Recumbent Bike", "available": True},
+    '11': {"id": 11, "model": "Fat Bike", "available": True},
+    '12': {"id": 12, "model": "Triathlon Bike", "available": True},
+    '13': {"id": 13, "model": "Track Bike", "available": True},
+    '14': {"id": 14, "model": "Touring Bike", "available": True},
+    '15': {"id": 15, "model": "Cyclocross Bike", "available": True},
 }
 
 rentals = {
@@ -32,7 +44,7 @@ rentals_history = {
 def index():
     if 'username' in session:
         username = session['username']
-        return render_template('index.html', bikes=bikes, username=username)
+        return render_template('index.html', bikes=bikes, username=username, rentals=rentals)
     else:
         return render_template('index.html', bikes=bikes)
 
@@ -122,7 +134,11 @@ def rent_bike(bike_id,action):
                 rentals[session['username']]['enddate'] = time.strftime("%Y-%m-%d %H:%M")
                 rentals[session['username']]['price'] = calculaprecio(rentals[session['username']]['startdate'],rentals[session['username']]['enddate'])
                 rentals[session['username']]['status'] = "returned"
-                rentals_history[session['username']].append(rentals[session['username']])
+                if session['username'] in rentals_history:
+                    rentals_history[session['username']].append(rentals[session['username']])
+                else:
+                    rentals_history[session['username']] = []
+                    rentals_history[session['username']].append(rentals[session['username']])
                 rentals.pop(session['username'], None)
                 return redirect(url_for('index'))
             else:

@@ -32,9 +32,11 @@
                 <li>
                     <a href="/bike/{{ bike }}">ID:{{bike}}, Model:{{bikes[bike].model}}</a>
                     {% if session['username'] %}
-                    <form action="/bike/{{ bike }}/rent" method="POST">
-                        <button type="submit">Rentar</button>
-                    </form>
+                        {% if session['username'] not in rentals %}
+                            <form action="/bike/{{ bike }}/rent" method="POST">
+                                <button type="submit">Rentar</button>
+                            </form>
+                        {% endif %}
                     {% endif %}
                 </li>
                 {% endif %}

@@ -34,7 +34,7 @@
         <ul>
             {% for bike in rentals_history[user['username']] %}
             <li>
-                <a href="/bike/{{ bike.id }}">{{ bike.id }} {{ bike.model }} {{ bike.startdate }} {{ bike.enddate }} {{bike.price}}</a>
+                <a href="/bike/{{ bike.id }}">ID:{{ bike.id }} Model:{{ bike.model }} Inicio:{{ bike.startdate }} Fin:{{ bike.enddate }} Total:${{bike.price}}</a>
             </li>
             {% endfor %}
         </ul>
