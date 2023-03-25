@@ -8,24 +8,34 @@
 </head>
 <body>
     <h1>Perfil</h1>
-    <p>Usuario: {{username}}</p>
-    {% if username in rentals %}
+    <p>Usuario: {{user.username}}</p>
+    {% if session['username'] == user.username %}
+    <p>Nombre: {{user.name}}</p>
+    <p>Telefono: {{user.telefono}}</p>
+    {% endif %}
+    {% if user['username'] in rentals %}
     <p>Actualmente rentando:</p>
     <ul>
-        {% for bike in rentals[username] %}
+        {% if rentals[user['username']] %}
         <li>
-            <a href="/bike/{{ bike.id }}">{{ bike.model }}</a>
-            <form action="/bike/{{ bike.id }}/return" method="POST">
+            <a href="/bike/{{ rentals[user['username']].id }}">{{ rentals[user['username']].id }},{{ rentals[user['username']].model }}</a>
+            <form action="/bike/{{ rentals[user['username']].id }}/return" method="POST">
                 <button type="submit">Return</button>
             </form>
         </li>
-        {% endfor %}
+        {% endif %}
     </ul>
     {% endif %}
     <p></p>
     <p>Historial de Rentas</p>
-    {% if username in rentals_history %}
-    
+    {% if user['username'] in rentals_history %}
+    <ul>
+        {% for bike in rentals_history[user['username']] %}
+        <li>
+            <a href="/bike/{{ bike.id }}">{{ bike.id }} {{ bike.model }} {{ bike.startdate }} {{ bike.enddate }} {{bike.price}}</a>
+        </li>
+        {% endfor %}
+    </ul>
     {% endif %}
 
 </body>

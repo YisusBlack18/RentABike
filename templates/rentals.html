@@ -8,12 +8,12 @@
     {% if rentals %}
     <ul>
         {% for bike in rentals %}
-        <li>{{ bike.model }} (ID: {{ bike.id }})</li>
+        <li>{{ rentals[bike] }}</li>
         {% endfor %}
     </ul>
     {% else %}
     <p>No bikes are currently rented.</p>
     {% endif %}
-    <a href="/">Back to available bikes</a>
+    <a href="/">Volver a inicio</a>
 </body>
 </html>

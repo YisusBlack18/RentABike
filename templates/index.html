@@ -7,6 +7,9 @@
 	{% if username %}
 		<h1>Bienvenido, {{ username }}!</h1>
         <p><a href="/users/{{ username }}">Ver perfil</a></p>
+        {% if username == "admin" %}
+        <p><a href="/users">Lista de Usuarios</a></p>
+        {% endif %}
 		<p><a href="{{ url_for('logout') }}">Cerrar sesión</a></p>
 	{% else %}
 		<p>Por favor, inicie sesión o regístrese.</p>
@@ -14,13 +17,24 @@
 		<p><a href="{{ url_for('register') }}">Registrarse</a></p>
 	{% endif %}
     <br>
+    <h1>Precios</h1>
+    <ul>
+        <li>Hora inicial: $30</li>
+        <li>Hora extra: $10</li>
+    </ul>
+    <br>
     <h1>Bicicletas Disponibles:</h1>
     <p><a href="">Rentar una bicicleta</a></p>
     <ul>
         {% for bike in bikes %}
-            {% if bike.available %}
+            {% if bikes[bike].available %}
             <li>
-                <a href="/bike/{{ bike.id }}">{{ bike.model }}</a>
+                <a href="/bike/{{ bike }}">ID:{{bike}}, Model:{{bikes[bike].model}}</a>
+                {% if session['username'] %}
+                <form action="/bike/{{ bike }}/rent" method="POST">
+                    <button type="submit">Rentar</button>
+                </form>
+                {% endif %}
             </li>
             {% endif %}
         {% endfor %}
