@@ -12,7 +12,7 @@
             <li>Available: {% if bike.available %}Yes{% else %}No{% endif %}</li>
         </ul>
         {% if bike.available %}
-            {% if session['username'] not in rentals %}
+            {% if session['username'] and session['username'] not in rentals %}
                 <form action="/bike/{{ bike.id }}/rent" method="POST">
                     <button type="submit">Rent</button>
                 </form>
